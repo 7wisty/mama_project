@@ -11,7 +11,7 @@ export function register() {
     cy.get(selectors.registerPage).find('h1').should('have.text', 'Sign up');
     cy.get(selectors.registerForm).should('be.visible');
 
-    const rnd = Math.round(Math.random() * 8999) + 1000;
+    const rnd = Math.round(Math.random() * 89999) + 10000;
 
     const username = 'user_' + rnd;
     
