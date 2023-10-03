@@ -1,0 +1,18 @@
+{
+    "appHeader": ".navbar",
+    "addArticlePage": ".editor-page",
+    "addArticleForm": ".editor-page form",
+    "articlePage": ".article-page",
+    "myArticles": "article-list",
+    "editArticleForm": ".editor-page form",
+    "articleTagInput": ".editor-page input[ng-model$=tagField]",
+    "articleTags": ".article-page .tag-list ",
+    "editArticlePage": ".editor-page",
+    "editTitle": ".editor-page input[ng-model$=title]",
+    "settingsPage": ".settings-page",
+
+    "registerPage": ".auth-page",
+    "registerForm": ".auth-page form"
+    
+   
+}
