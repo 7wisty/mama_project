@@ -2,6 +2,10 @@ import meUser from '/cypress/fixtures/me-user.json';
 import selectors from '/cypress/fixtures/selectors.json';
 import { faker } from '@faker-js/faker';
 
+export function getRandomNumber(min, max) {
+    return Math.round(Math.random() * (max - min)) + min;
+};
+
 export function register() {
 
     cy.get(selectors.appHeader).find('a[href$="/register"]').should('be.visible').as('registerButton');

@@ -12,7 +12,9 @@
     "settingsPage": ".settings-page",
 
     "registerPage": ".auth-page",
-    "registerForm": ".auth-page form"
+    "registerForm": ".auth-page form",
+
+    "articleList": "article-list",
+    "articlePreview": "article-list article-preview"
     
-   
-}
+} 
