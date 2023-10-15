@@ -1,10 +1,17 @@
-import { login, openMyArticles, checkArticle, openMyArticle, clearArticle, fillArticle, addArticle } from '/cypress/support/utils.js';
+import { setJwtToken, openMyArticles, checkArticle, openMyArticle, clearArticle, fillArticle, addArticle } from '/cypress/support/utils.js';
 import selectors from '/cypress/fixtures/selectors.json';
 
 describe('Articles',() => {
     beforeEach(() => {
         cy.visit('/');
-        login();
+        cy.readFile('tmp/token.txt')
+        .should('not.be.empty')
+        .then(token => {
+            cy.visit('/', {
+                onBeforeLoad: (window) => setJwtToken(window, token)
+            });
+        });
+        
     });
 
     it('publish article',() => {

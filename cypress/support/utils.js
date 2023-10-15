@@ -2,6 +2,24 @@ import meUser from '/cypress/fixtures/me-user.json';
 import selectors from '/cypress/fixtures/selectors.json';
 import { faker } from '@faker-js/faker';
 
+before(() => {
+    const { email, password } = meUser;
+    cy.request('POST', 'https://api.realworld.io/api/users/login',
+    { user: { email, password }})
+    .then(({ status, body }) => {
+        expect(status).to.eq(200);
+        expect(body).to.have.key('user');
+        
+        const { user } = body;
+        cy.writeFile('tmp/token.txt', user.token);
+    });
+
+});
+
+export function setJwtToken(window, token) {
+    window.localStorage.setItem('jwtToken', token)
+};
+
 export function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min)) + min;
 };
@@ -72,10 +90,6 @@ export function addArticle() {
     cy.get('.container.page').should('be.visible');
 
     return article;
-};
-
-export function setJwtToken(window, token) {
-    window.localStorage.setItem('jwtToken', token);
 };
 
 export function generateFakeArticle() {

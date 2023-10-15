@@ -1,5 +1,5 @@
 ///<reference types="cypress" />
-import { register, login, logout } from '/cypress/support/utils.js';
+import { register, login, logout, setJwtToken } from '/cypress/support/utils.js';
 
 
 describe('Sign up', () => {
@@ -16,7 +16,13 @@ describe('Sign up', () => {
     });
     
     it('should do logout user', () => {
-        login();
+        cy.readFile('tmp/token.txt')
+        .should('not.be.empty')
+        .then(token => {
+            cy.visit('/', {
+                onBeforeLoad: (window) => setJwtToken(window, token)
+            });
+        });
         logout();
     });
 

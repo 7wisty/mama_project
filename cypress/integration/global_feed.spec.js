@@ -1,5 +1,6 @@
-import { getRandomNumber, login } from '/cypress/support/utils.js';
+import { getRandomNumber, setJwtToken } from '/cypress/support/utils.js';
 import selectors from '/cypress/fixtures/selectors.json';
+import meUser from '/cypress/fixtures/me-user.json';
 
 function waitForArticlesList() {
 
@@ -73,7 +74,16 @@ describe('Global articles feed', () => {
     });
 
     it('like article', () => {
-        login();
+        cy.readFile('tmp/token.txt')
+        .should('not.be.empty')
+        .then(token => {
+            cy.visit('/', {
+                onBeforeLoad: (window) => setJwtToken(window, token)
+            });
+        });
+        cy.get('.navbar').should('be.visible')
+        .should('contain.text', meUser.username);
+
         cy.get('.feed-toggle ul > li:nth-child(2) a').should('be.visible').click();
       
         cy.get(selectors.articleList).find('.article-preview:not(.ng-hide)')
@@ -142,7 +152,6 @@ describe('Global articles feed', () => {
                 .click();
         waitForArticlesList();
 
-        cy.get('@')
         cy.get(selectors.articleList).find('.article-preview:not(.ng-hide)')
         .should('be.visible')
         .should('have.length', 10);
@@ -151,7 +160,7 @@ describe('Global articles feed', () => {
 
     });
 
-    it.only('should do filter articles by tag', () => {
+    it('should do filter articles by tag', () => {
         cy.get('.tag-list > a[ng-bind=tagName]').should('have.length.greaterThan', 5).as('Tags');
         const rand = getRandomNumber(0, 5);
         cy.get('@Tags')
